@@ -1,0 +1,28 @@
+!!!
+%html
+  %head
+    %link(rel="stylesheet" href="http://yui.yahooapis.com/2.8.0r4/build/reset/reset-min.css")
+    %link(rel="stylesheet" href="css/newstyle.css")
+    %title Tweetfeed - Generate RSS Feeds From Twitter Timelines
+  %body
+    #wrapper
+      #header
+        %h1 Tweetfeed 
+        %h2 Generate Your RSS News Feeds From Twitter's Timelines
+      #nav
+        %ol
+          %a(href="/")
+            %li Home
+          %a(href="/about")
+            %li About
+          %a(href="/signup")
+            %li Sign Up
+      #content
+        =yield
+      #site_bar
+        %h1 Side Bar
+        %p
+          This is the site bar of the webpage
+      #footer
+        %p
+          This is the footer.

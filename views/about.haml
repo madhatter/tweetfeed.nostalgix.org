@@ -1,0 +1,13 @@
+%h1 Sign Up 
+%p
+  %form{:action => "", :method => "post"}
+    %fieldset
+      %ol
+        %li
+          %label{:for => "username"} Username:
+          %input{:type => "text", :username => "username", :class => "text"}
+        %li
+          %label{:for => "mail"} Email:
+          %input{:type => "text", :name => "mail", :class => "text"}
+    %input{:type => "submit", :value => "Send", :class => "button"}
+
