@@ -3,5 +3,5 @@ require 'bundler'
 
 Bundler.require
 
-require './website'
+require './tweetfeed'
 run Sinatra::Application
