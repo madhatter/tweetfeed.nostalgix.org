@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'haml'
+require_relative 'redisdb'
 
 get "/" do
   haml :index
@@ -15,10 +16,17 @@ end
 
 post "/signup" do
   username = params[:username]
+  password = params[:password]
   mail = params[:mail]
 
   #Pony.mail(:to => 'arvid.warnecke@gmail.com', :from => "#{mail}", :subject => "art inquiry from #{username}", :body => "Trallera")
-  puts "Username: #{username}, Email: #{mail}."
+
+  redis = RedisDB.new
+  unless  redis.user_exists? username
+    redis.create_user username, password, mail
+  else
+    puts "User already exists. So what now?"
+  end
 
   haml :signup
 end

@@ -1,8 +1,7 @@
-source :rubygems
+source "https://rubygems.org"
 
 gem "sinatra"
 gem "haml"
 gem "redis"
-#gem "activerecord"
-#gem "sinatra-activerecord"
 gem "json"
+gem "bcrypt-ruby"
