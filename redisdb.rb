@@ -43,12 +43,21 @@ class RedisDB
     @r.sismember "#{USERS_SET}", username 
   end
 
+  # check login credentials
+  def valid_user? username, password
+    user_exists?(username) && valid_password?(username, password)
+  end
+
+  def valid_password? username, password
+    decrypt(@r.get("users:#{username}:password")) == password
+  end
+
   private
   def encrypt password
     BCrypt::Password.create password
   end
 
-  def decrupt password
-    BCrypt::Password.new password
+  def decrypt password
+    BCrypt::Password.new(password)
   end
 end

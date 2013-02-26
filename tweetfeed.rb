@@ -30,3 +30,25 @@ post "/signup" do
 
   haml :signup
 end
+
+get "/login" do
+  haml :login
+end
+
+post "/login" do
+  username = params[:username]
+  password = params[:password]
+
+  redis = RedisDB.new
+  if redis.user_exists? username
+    if redis.valid_user? username, password
+      # create session, set cookies and what not
+      puts "You would have been logged in."
+    else
+      puts "Wrong password."
+    end
+  else
+    puts "Not a valid username."
+  end
+end
+
