@@ -20,7 +20,7 @@ class RedisDB
 
       # then create the user information 
       @r.set "users:#{username}:username", username
-      @r.set "users:#{username}:password", encrypt(password)
+      @r.set "users:#{username}:password", create_pass(password)
       @r.set "users:#{username}:email", email
     end
   end
@@ -49,15 +49,15 @@ class RedisDB
   end
 
   def valid_password? username, password
-    decrypt(@r.get("users:#{username}:password")) == password
+    pass(@r.get("users:#{username}:password")) == password
   end
 
   private
-  def encrypt password
+  def create_pass password
     BCrypt::Password.create password
   end
 
-  def decrypt password
+  def pass password
     BCrypt::Password.new(password)
   end
 end
