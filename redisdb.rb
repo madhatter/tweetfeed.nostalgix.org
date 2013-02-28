@@ -13,7 +13,7 @@ class RedisDB
   end
 
   # create a new user
-  def create_user username, password, email
+  def create_user(username, password, email)
     @r.multi do
       # add the user to the users set
       @r.sadd "#{USERS_SET}", username
@@ -26,7 +26,7 @@ class RedisDB
   end
 
   # delete all user information
-  def delete_user username
+  def delete_user(username)
     @r.multi do
       # delete from the user set
       @r.srem "#{USERS_SET}", username
@@ -39,25 +39,25 @@ class RedisDB
   end
 
   # check if a user already is stored in the database
-  def user_exists? username
+  def user_exists?(username)
     @r.sismember "#{USERS_SET}", username 
   end
 
   # check login credentials
-  def valid_user? username, password
+  def valid_user?(username, password)
     user_exists?(username) && valid_password?(username, password)
   end
 
-  def valid_password? username, password
+  def valid_password?(username, password)
     pass(@r.get("users:#{username}:password")) == password
   end
 
   private
-  def create_pass password
+  def create_pass(password)
     BCrypt::Password.create password
   end
 
-  def pass password
+  def pass(password)
     BCrypt::Password.new(password)
   end
 end
