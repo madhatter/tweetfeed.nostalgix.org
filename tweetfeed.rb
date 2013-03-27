@@ -2,7 +2,13 @@ require 'sinatra'
 require 'haml'
 require_relative 'redisdb'
 
+configure do
+  enable :sessions
+  set :session_secret, "for_security"
+end
+
 get "/" do
+  @session = session[:tfeed]
   haml :index
 end
 
@@ -44,11 +50,18 @@ post "/login" do
     if redis.valid_user? username, password
       # create session, set cookies and what not
       puts "You would have been logged in."
+      session[:tfeed] = Time.now
+      redirect "/"
     else
       puts "Wrong password."
     end
   else
     puts "Not a valid username."
   end
+end
+
+get "/logout" do
+  session.clear
+  redirect "/"
 end
 

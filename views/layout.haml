@@ -17,8 +17,12 @@
             %li About
           %a(href="/signup")
             %li Sign Up
-          %a(href="/login")
-            %li Login
+          - if not @session
+            %a(href="/login")
+              %li Login
+          - else
+            %a(href="/logout")
+              %li Logout
       #content
         =yield
       #site_bar
