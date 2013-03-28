@@ -15,9 +15,9 @@
             %li Home
           %a(href="/about")
             %li About
-          %a(href="/signup")
-            %li Sign Up
           - if not @session
+            %a(href="/signup")
+              %li Sign Up
             %a(href="/login")
               %li Login
           - else
