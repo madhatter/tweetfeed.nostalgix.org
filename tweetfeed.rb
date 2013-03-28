@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'haml'
+require 'pony'
 require_relative 'redisdb'
 
 configure do
@@ -65,3 +66,28 @@ get "/logout" do
   redirect "/"
 end
 
+def send_registration_mail mail
+  options = load_mail_settings
+  Pony.mail({
+    :to => mail,
+    :via => :smtp,
+    :via_options => options,
+    :subject => titel + " - " + price.to_s + " Euro",
+    :body => link
+  })
+end
+
+def load_mail_settings
+  #TODO: get user, password and domain from redis
+  options = {
+      :address              => 'smtp.gmail.com',
+      :port                 => '587',
+      :enable_starttls_auto => true,
+      #:user_name            => configuration['mail_user'],
+      :user_name            => 'tweetfeed@nostalgix.org',
+      #:password             => configuration['mail_password'],
+      :password             => 'password',
+      :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
+      :domain               => "localhost.localdomain" # the HELO domain provided by the client to the server
+    } 
+end
