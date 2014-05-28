@@ -18,7 +18,7 @@ class RedisDB
       # add the user to the users set
       @r.sadd "#{USERS_SET}", username
 
-      # then create the user information 
+      # then create the user information
       @r.set "users:#{username}:username", username
       @r.set "users:#{username}:password", create_pass(password)
       @r.set "users:#{username}:email", email
@@ -40,7 +40,7 @@ class RedisDB
 
   # check if a user already is stored in the database
   def user_exists?(username)
-    @r.sismember "#{USERS_SET}", username 
+    @r.sismember "#{USERS_SET}", username
   end
 
   # check login credentials
@@ -49,7 +49,7 @@ class RedisDB
   end
 
   def valid_password?(username, password)
-    pass(@r.get("users:#{username}:password")) == password
+    pass(@r.get("#{USERS_SET}:#{username}:password")) == password
   end
 
   private
