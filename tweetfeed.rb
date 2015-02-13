@@ -29,6 +29,7 @@ post "/signup" do
   #Pony.mail(:to => 'arvid.warnecke@gmail.com', :from => "#{mail}", :subject => "art inquiry from #{username}", :body => "Trallera")
 
   redis = RedisDB.new
+  #TODO: We should test the database connection sometime before relying on it...
   unless  redis.user_exists? username
     redis.create_user username, password, mail
   else
